@@ -1,0 +1,126 @@
+---
+title       : ROC Plotting of Performance using "roll belt"" and "yaw belt"" features prediction
+subtitle    : Gamma and Cost adjustable SVM model with ROC Analysis
+author      : Ron Bjork
+job         : Data Products Developer
+framework   : io2012        # {io2012, html5slides, shower, dzslides, ...}
+highlighter : highlight.js  # {highlight.js, prettify, highlight}
+hitheme     : tomorrow      # 
+widgets     : [mathjax]            # {mathjax, quiz, bootstrap}
+ext_widgets : {rCharts: [libraries/nvd3]}
+mode        : selfcontained # {standalone, draft}
+knit        : slidify::knit2slides
+---
+
+### Support Vector Machines
+
+This Data Product provides the user a way to 
+explore the effects of gamma and cost parameters on 
+the Support Vector Machine model for prediction. Below
+is a classification plot of two gaussian distributed population differing 
+in their mean. The red points belong to population 2. Gamma = 1  Cost = 1
+
+```{r echo = F, results = 'asis'}
+# require(rCharts)
+# haireye = as.data.frame(HairEyeColor)
+# n1 <- nPlot(Freq ~ Hair , group = 'Eye', type = 'multiBarChart',
+#   data = subset(haireye, Sex == 'Male')
+# )
+# n1$print('chart1')
+
+
+# Since the data below works perhaps 
+# best strategy is to simply shape the data of interest, that above,
+# into that below:
+set.seed(1)
+x=matrix(rnorm(200*2),ncol=2)
+x[1:100,]=x[1:100,]+2
+x[101:150,]=x[101:150,]-2
+y=c(rep(1,150),rep(2,50))
+dat=data.frame(x=x,y=as.factor(y))
+
+train=sample(200,100)
+
+
+modelFit <- svm(y~., data=dat[train,],kernel="radial",gamma=1,cost=1,decision.values=T)
+modelFit2 <- svm(y~., data=dat[train,],kernel="radial",gamma=20,cost=1,decision.values=T)
+
+plot(modelFit,dat[-train,],page=FALSE,new=TRUE)
+```
+
+---
+
+Gamma = 20  Cost = 1
+
+```{r echo = F, results = 'asis'}
+plot(modelFit2,dat[-train,],page=FALSE,new=TRUE)
+
+```
+
+--- .class #id 
+
+### Classification and Confusion Matrix
+
+Using "Gamma = 1  Cost = 1", the confusion matrix is calculated to give
+some numerical values on Accuracy, Sensivity, Specifity
+False Positives and True positives.
+<table>
+<tr><td></td><td></td><td colspan=2><b>Truth</b></td></tr>
+<tr><td></td><td></td><td>negative</td><td>positive</td></tr>
+<tr><td><b>Prediction</b></td><td>negative</td><td>A</td><td>B</td></tr>
+<tr><td></td><td>positive</td><td>C</td><td>D</td></tr>
+</table>
+ <br>
+<table>
+<tr><td>Accuracy:</td><td>$$\frac{A + D}{A + B + C + D}$$</td></tr>
+<tr><td>False Positives Rate:</td><td>$$\frac{C}{A + C}$$</td></tr>
+<tr><td>True Positives Rate:</td><td>$$\frac{D}{B + D}$$</td></tr>
+</table>
+
+---
+
+
+### Its 'Confussion Matrix'
+
+```{r echo = F, results = 'asis'}
+
+fitted <- attributes(predict(modelFit, dat[train,], decision.values=TRUE))$decision.values
+predictionsTest <- predict(modelFit,dat[-train,],decision.values=T)
+fittedTest <- attributes(predictionsTest)$decision.values
+
+cm <- confusionMatrix(predictionsTest,dat[-train,"y"])
+
+fpr <- cm$table[3]/(cm$table[1] + cm$table[3])
+tpr <- cm$table[4]/(cm$table[2] + cm$table[4])
+
+```
+<table>
+<tr><td></td><td></td><td colspan=2><b>Truth</b></td></tr>
+<tr><td></td><td></td><td>negative</td><td>positive</td></tr>
+<tr><td><b>Prediction</b></td><td>negative</td><td>`r cm$table[1]`</td><td>`r cm$table[3]`</td></tr>
+<tr><td></td><td>positive</td><td>`r cm$table[2]`</td><td>`r cm$table[4]`</td></tr>
+</table>
+
+<table>
+<tr><td>Accuracy:`r cm$overall[1]`</td></tr>
+<tr><td>False Positives Rate:$$\frac{`r cm$table[3]`}{`r cm$table[1]` + `r cm$table[3]`}$$ = `r fpr`</td></tr>
+<tr><td>True Positives Rate: $$\frac{`r cm$table[4]`}{`r cm$table[2]` + `r cm$table[4]`}$$ = `r tpr`</td></tr>
+</table>
+
+
+
+---
+
+### Its ROC
+
+```{r echo = F, results = 'asis'}
+
+rocplot <- function(pred,truth, ...){
+  predob = prediction(pred,truth)
+  perf = performance(predob,"tpr","fpr")
+  plot(perf,...)
+}
+
+rocplot(fitted,dat[train,"y"],main="ROC - black:Train data, red:Test data")
+rocplot(fittedTest,dat[-train,"y"],add=T,col="red")
+```
