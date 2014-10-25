@@ -66,9 +66,11 @@ in their mean. The red points belong to population 2. Gamma = 1  Cost = 1</p>
 
 <slide class="" id="slide-2" style="background:;">
   <article data-timings="">
-    <p>Gamma = 20  Cost = 1</p>
+    <p>Gamma = 20  Cost = 1   Notice the tighter region around Selected. This will reduce False positives but will also overfit the model some. But we can change the cost to improve the optimal SVM.</p>
 
 <p><img src="assets/fig/unnamed-chunk-2.png" alt="plot of chunk unnamed-chunk-2"> </p>
+
+<table><tr><td></td></tr></table>
 
   </article>
   <!-- Presenter Notes -->
@@ -79,35 +81,10 @@ in their mean. The red points belong to population 2. Gamma = 1  Cost = 1</p>
     <h3>Classification and Confusion Matrix</h3>
   </hgroup>
   <article data-timings="">
-    <p>The ConfusionMatrix is calculated to give
-some numerical values on Accuracy, Sensivity, Specifity
-False Positives and True positives.</p>
+    <p>Using &quot;Gamma = 1  Cost = 1&quot;, the confusion matrix is calculated with 
+values for Accuracy, Sensivity, Specifity, False Positives and True positives calculated.</p>
 
 <table>
-<tr><td></td><td></td><td colspan=2><b>Truth</b></td></tr>
-<tr><td></td><td></td><td>negative</td><td>positive</td></tr>
-<tr><td><b>Prediction</b></td><td>negative</td><td>A</td><td>B</td></tr>
-<tr><td></td><td>positive</td><td>C</td><td>D</td></tr>
-</table>
-
-<p><br></p>
-
-<table>
-<tr><td>Accuracy:</td><td>$$\frac{A + D}{A + B + C + D}$$</td></tr>
-<tr><td>False Positives Rate:</td><td>$$\frac{C}{A + C}$$</td></tr>
-<tr><td>True Positives Rate:</td><td>$$\frac{D}{B + D}$$</td></tr>
-</table>
-
-  </article>
-  <!-- Presenter Notes -->
-</slide>
-
-<slide class="" id="slide-4" style="background:;">
-  <hgroup>
-    <h3>Its &#39;Confussion Matrix&#39;</h3>
-  </hgroup>
-  <article data-timings="">
-    <table>
 <tr><td></td><td></td><td colspan=2><b>Truth</b></td></tr>
 <tr><td></td><td></td><td>negative</td><td>positive</td></tr>
 <tr><td><b>Prediction</b></td><td>negative</td><td>72</td><td>7</td></tr>
@@ -116,15 +93,15 @@ False Positives and True positives.</p>
 
 <table>
 <tr><td>Accuracy:0.88</td></tr>
-<tr><td>False Positives Rate:$$\frac{7}{72 + 7}$$ = 0.0886</td></tr>
-<tr><td>True Positives Rate: $$\frac{16}{5 + 16}$$ = 0.7619</td></tr>
+<tr><td>False Positives Rate:$$\frac{5}{72 + 5}$$ = 0.0886</td></tr>
+<tr><td>True Positives Rate: $$\frac{16}{7 + 16}$$ = 0.7619</td></tr>
 </table>
 
   </article>
   <!-- Presenter Notes -->
 </slide>
 
-<slide class="" id="slide-5" style="background:;">
+<slide class="" id="slide-4" style="background:;">
   <hgroup>
     <h3>Its ROC</h3>
   </hgroup>
@@ -159,14 +136,8 @@ False Positives and True positives.</p>
     </li>
     <li>
       <a href="#" target="_self" rel='tooltip' 
-        data-slide=4 title='Its &#39;Confussion Matrix&#39;'>
+        data-slide=4 title='Its ROC'>
          4
-      </a>
-    </li>
-    <li>
-      <a href="#" target="_self" rel='tooltip' 
-        data-slide=5 title='Its ROC'>
-         5
       </a>
     </li>
   </ul>
