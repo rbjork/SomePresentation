@@ -50,37 +50,21 @@ plot(modelFit,dat[-train,],page=FALSE,new=TRUE)
 
 ---
 
-Gamma = 20  Cost = 1
+Gamma = 20  Cost = 1   Notice the tighter region around Selected. This will reduce False positives but will also overfit the model some. But we can change the cost to improve the optimal SVM.
 
 ```{r echo = F, results = 'asis'}
-plot(modelFit2,dat[-train,],page=FALSE,new=TRUE)
+p1 <- plot(modelFit2,dat[-train,],page=FALSE,new=TRUE)
 
 ```
+<table><tr><td>`r p1 `</td></tr></table>
 
 --- .class #id 
 
 ### Classification and Confusion Matrix
 
-Using "Gamma = 1  Cost = 1", the confusion matrix is calculated to give
-some numerical values on Accuracy, Sensivity, Specifity
-False Positives and True positives.
-<table>
-<tr><td></td><td></td><td colspan=2><b>Truth</b></td></tr>
-<tr><td></td><td></td><td>negative</td><td>positive</td></tr>
-<tr><td><b>Prediction</b></td><td>negative</td><td>A</td><td>B</td></tr>
-<tr><td></td><td>positive</td><td>C</td><td>D</td></tr>
-</table>
- <br>
-<table>
-<tr><td>Accuracy:</td><td>$$\frac{A + D}{A + B + C + D}$$</td></tr>
-<tr><td>False Positives Rate:</td><td>$$\frac{C}{A + C}$$</td></tr>
-<tr><td>True Positives Rate:</td><td>$$\frac{D}{B + D}$$</td></tr>
-</table>
+Using "Gamma = 1  Cost = 1", the confusion matrix is calculated with 
+values for Accuracy, Sensivity, Specifity, False Positives and True positives calculated.
 
----
-
-
-### Its 'Confussion Matrix'
 
 ```{r echo = F, results = 'asis'}
 
@@ -103,8 +87,8 @@ tpr <- cm$table[4]/(cm$table[2] + cm$table[4])
 
 <table>
 <tr><td>Accuracy:`r cm$overall[1]`</td></tr>
-<tr><td>False Positives Rate:$$\frac{`r cm$table[3]`}{`r cm$table[1]` + `r cm$table[3]`}$$ = `r fpr`</td></tr>
-<tr><td>True Positives Rate: $$\frac{`r cm$table[4]`}{`r cm$table[2]` + `r cm$table[4]`}$$ = `r tpr`</td></tr>
+<tr><td>False Positives Rate:$$\frac{`r cm$table[2]`}{`r cm$table[1]` + `r cm$table[2]`}$$ = `r fpr`</td></tr>
+<tr><td>True Positives Rate: $$\frac{`r cm$table[4]`}{`r cm$table[3]` + `r cm$table[4]`}$$ = `r tpr`</td></tr>
 </table>
 
 
