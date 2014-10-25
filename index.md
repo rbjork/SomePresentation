@@ -24,34 +24,18 @@ in their mean. The red points belong to population 2. Gamma = 1  Cost = 1
 
 ---
 
-Gamma = 20  Cost = 1
+Gamma = 20  Cost = 1   Notice the tighter region around Selected. This will reduce False positives but will also overfit the model some. But we can change the cost to improve the optimal SVM.
 
 ![plot of chunk unnamed-chunk-2](assets/fig/unnamed-chunk-2.png) 
+<table><tr><td></td></tr></table>
 
 --- .class #id 
 
 ### Classification and Confusion Matrix
 
-The ConfusionMatrix is calculated to give
-some numerical values on Accuracy, Sensivity, Specifity
-False Positives and True positives.
-<table>
-<tr><td></td><td></td><td colspan=2><b>Truth</b></td></tr>
-<tr><td></td><td></td><td>negative</td><td>positive</td></tr>
-<tr><td><b>Prediction</b></td><td>negative</td><td>A</td><td>B</td></tr>
-<tr><td></td><td>positive</td><td>C</td><td>D</td></tr>
-</table>
- <br>
-<table>
-<tr><td>Accuracy:</td><td>$$\frac{A + D}{A + B + C + D}$$</td></tr>
-<tr><td>False Positives Rate:</td><td>$$\frac{C}{A + C}$$</td></tr>
-<tr><td>True Positives Rate:</td><td>$$\frac{D}{B + D}$$</td></tr>
-</table>
+Using "Gamma = 1  Cost = 1", the confusion matrix is calculated with 
+values for Accuracy, Sensivity, Specifity, False Positives and True positives calculated.
 
----
-
-
-### Its 'Confussion Matrix'
 
 
 <table>
@@ -63,8 +47,8 @@ False Positives and True positives.
 
 <table>
 <tr><td>Accuracy:0.88</td></tr>
-<tr><td>False Positives Rate:$$\frac{7}{72 + 7}$$ = 0.0886</td></tr>
-<tr><td>True Positives Rate: $$\frac{16}{5 + 16}$$ = 0.7619</td></tr>
+<tr><td>False Positives Rate:$$\frac{5}{72 + 5}$$ = 0.0886</td></tr>
+<tr><td>True Positives Rate: $$\frac{16}{7 + 16}$$ = 0.7619</td></tr>
 </table>
 
 
